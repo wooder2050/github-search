@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38daf77d3100526d8d94834a4a227685>>
+ * @generated SignedSource<<c0015b4cbb6445bb4a58c7be2b33f99e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -144,7 +144,7 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "updatedAt",
+                        "name": "stargazerCount",
                         "storageKey": null
                       }
                     ],
@@ -221,16 +221,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "659f6c733fa13490c0da466fbf8bfe44",
+    "cacheID": "df5b4f77940566ebe7229ed7772de1e4",
     "id": null,
     "metadata": {},
     "name": "SearchsContainerSearchsQuery",
     "operationKind": "query",
-    "text": "query SearchsContainerSearchsQuery(\n  $after: String\n  $first: Int\n  $query: String!\n) {\n  ...SearchContainer_searchs\n}\n\nfragment SearchContainer_searchs on Query {\n  search(query: $query, type: REPOSITORY, first: $first, after: $after) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          name\n          description\n          updatedAt\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SearchsContainerSearchsQuery(\n  $after: String\n  $first: Int\n  $query: String!\n) {\n  ...SearchContainer_searchs\n}\n\nfragment SearchContainer_searchs on Query {\n  search(query: $query, type: REPOSITORY, first: $first, after: $after) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          name\n          description\n          stargazerCount\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5d9352b98f7d34d502193548758257b6";
+(node as any).hash = "7f066dba453ba930211a0469f7317923";
 
 export default node;

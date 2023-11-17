@@ -1,9 +1,14 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { graphql } from "babel-plugin-relay/macro";
 import { useLazyLoadQuery } from "react-relay/hooks";
-import { Search } from "./Search";
+import { Search } from "./search/Search";
+import { SearchHeader } from "./search/SearchHeader";
+import { Loader } from "./search/Loader";
+import { Home } from "./search/Home";
 
 const SearchContainer = () => {
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
+
   const query = useLazyLoadQuery(
     graphql`
       query SearchContainerQuery(
@@ -15,16 +20,27 @@ const SearchContainer = () => {
       }
     `,
     {
-      query: "language:JavaScript stars:>10000",
-      first: 10,
+      query: searchQuery ?? "",
+      first: 20,
       after: null,
     }
   );
 
+  const handleSearchQuery = (keyword: string) => {
+    setSearchQuery(keyword);
+  };
+
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <Search query={query} />
-    </Suspense>
+    <>
+      <SearchHeader handleSearchQuery={handleSearchQuery} />
+      {searchQuery ? (
+        <Suspense fallback={<Loader />}>
+          <Search query={query} />
+        </Suspense>
+      ) : (
+        <Home />
+      )}
+    </>
   );
 };
 

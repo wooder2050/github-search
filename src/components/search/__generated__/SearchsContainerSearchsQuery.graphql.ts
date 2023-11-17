@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5dbfea57dc8797c90bbc4f4602f98b69>>
+ * @generated SignedSource<<b6e6032d20b7210f663d659b6bba6172>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,36 +10,38 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchContainerQuery$variables = {
+export type SearchsContainerSearchsQuery$variables = {
   after?: string | null | undefined;
-  first: number;
+  first?: number | null | undefined;
   query: string;
 };
-export type SearchContainerQuery$data = {
+export type SearchsContainerSearchsQuery$data = {
   readonly " $fragmentSpreads": FragmentRefs<"SearchContainer_searchs">;
 };
-export type SearchContainerQuery = {
-  response: SearchContainerQuery$data;
-  variables: SearchContainerQuery$variables;
+export type SearchsContainerSearchsQuery = {
+  response: SearchsContainerSearchsQuery$data;
+  variables: SearchsContainerSearchsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "after"
-},
-v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "first"
-},
-v2 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "query"
-},
-v3 = [
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "query"
+  }
+],
+v1 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -61,7 +63,7 @@ v3 = [
     "value": "REPOSITORY"
   }
 ],
-v4 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -70,14 +72,10 @@ v4 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/),
-      (v2/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "SearchContainerQuery",
+    "name": "SearchsContainerSearchsQuery",
     "selections": [
       {
         "args": null,
@@ -90,17 +88,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v2/*: any*/),
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "SearchContainerQuery",
+    "name": "SearchsContainerSearchsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "SearchResultItemConnection",
         "kind": "LinkedField",
         "name": "search",
@@ -160,7 +154,7 @@ return {
                         "name": "stargazerCount",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -175,7 +169,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v4/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -223,7 +217,7 @@ return {
       },
       {
         "alias": null,
-        "args": (v3/*: any*/),
+        "args": (v1/*: any*/),
         "filters": [
           "query",
           "type"
@@ -236,16 +230,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "35974427e2f356a735004ec5cfb9fd71",
+    "cacheID": "798f8c58466ed60780725d21f76e26bb",
     "id": null,
     "metadata": {},
-    "name": "SearchContainerQuery",
+    "name": "SearchsContainerSearchsQuery",
     "operationKind": "query",
-    "text": "query SearchContainerQuery(\n  $query: String!\n  $first: Int!\n  $after: String\n) {\n  ...SearchContainer_searchs\n}\n\nfragment SearchContainer_searchs on Query {\n  search(query: $query, type: REPOSITORY, first: $first, after: $after) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          name\n          description\n          stargazerCount\n          id\n          viewerHasStarred\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SearchsContainerSearchsQuery(\n  $after: String\n  $first: Int\n  $query: String!\n) {\n  ...SearchContainer_searchs\n}\n\nfragment SearchContainer_searchs on Query {\n  search(query: $query, type: REPOSITORY, first: $first, after: $after) {\n    repositoryCount\n    edges {\n      node {\n        __typename\n        ... on Repository {\n          name\n          description\n          stargazerCount\n          id\n          viewerHasStarred\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f4c53f1d06fbd9f1ae8c6177af8582ef";
+(node as any).hash = "fd06240b1117da001530bcb39d9995ef";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac35f47fa0c4014cd779b551991107d1>>
+ * @generated SignedSource<<316bea076e71eebc17685ab24b490a35>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,10 @@ export type SearchContainer_searchs$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly description?: string | null | undefined;
+        readonly id?: string;
         readonly name?: string;
         readonly stargazerCount?: number;
+        readonly viewerHasStarred?: boolean;
       } | null | undefined;
     } | null | undefined> | null | undefined;
     readonly repositoryCount: number;
@@ -137,6 +139,20 @@ return {
                       "kind": "ScalarField",
                       "name": "stargazerCount",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "id",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "viewerHasStarred",
+                      "storageKey": null
                     }
                   ],
                   "type": "Repository",
@@ -196,6 +212,6 @@ return {
 };
 })();
 
-(node as any).hash = "7f066dba453ba930211a0469f7317923";
+(node as any).hash = "fd06240b1117da001530bcb39d9995ef";
 
 export default node;
