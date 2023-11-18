@@ -5,9 +5,14 @@ import { ISearchEdge } from "../../types/search";
 import { NoMatchResult } from "./NoMatchResult";
 import { ResultBox } from "./ResultBox";
 import { LoadMoreBtn } from "./LoadMoreBtn";
-import { Loader } from "./Loader";
 
-export const Search = ({ query }: { query: any }) => {
+export const Search = ({
+  query,
+  searchQuery,
+}: {
+  query: any;
+  searchQuery: string;
+}) => {
   const {
     data: {
       search: { edges },
@@ -15,6 +20,7 @@ export const Search = ({ query }: { query: any }) => {
     loadNext,
     hasNext,
     isLoadingNext,
+    refetch,
   } = usePaginationFragment(
     graphql`
       fragment SearchContainer_searchs on Query
@@ -45,7 +51,12 @@ export const Search = ({ query }: { query: any }) => {
         <section>
           <Menu>
             {(edges as ISearchEdge[]).map((result) => (
-              <ResultBox key={result.node.id} node={result.node} />
+              <ResultBox
+                key={result.node.id}
+                node={result.node}
+                refetch={refetch}
+                searchQuery={searchQuery}
+              />
             ))}
             {hasNext && (
               <LoadMoreBtn loadNext={loadNext} isLoadingNext={isLoadingNext} />

@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from "react";
 import { graphql } from "babel-plugin-relay/macro";
-import { useLazyLoadQuery } from "react-relay/hooks";
+import { useClientQuery, useLazyLoadQuery } from "react-relay/hooks";
 import { Search } from "./search/Search";
 import { SearchHeader } from "./search/SearchHeader";
 import { Loader } from "./search/Loader";
@@ -35,7 +35,7 @@ const SearchContainer = () => {
       <SearchHeader handleSearchQuery={handleSearchQuery} />
       {searchQuery ? (
         <Suspense fallback={<Loader />}>
-          <Search query={query} />
+          <Search query={query} searchQuery={searchQuery} />
         </Suspense>
       ) : (
         <Home />

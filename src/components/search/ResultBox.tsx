@@ -1,23 +1,89 @@
 import { Star, Unstar } from "../../assets/icons";
 import styled from "@emotion/styled";
-
+import { useMutation } from "react-relay";
+import { graphql } from "babel-plugin-relay/macro";
+import { OperationType } from "relay-runtime";
+import {
+  Options,
+  RefetchFnDynamic,
+} from "react-relay/relay-hooks/useRefetchableFragmentNode";
+import { Loader } from "./Loader";
 export const ResultBox = ({
-  node: { name, description, stargazerCount, viewerHasStarred },
+  node: { id, name, description, stargazerCount, viewerHasStarred },
+  refetch,
+  searchQuery,
 }: {
   node: {
+    id: string;
     name: string;
     description: string;
     stargazerCount: number;
     viewerHasStarred: boolean;
   };
+  refetch: RefetchFnDynamic<OperationType, any, Options>;
+  searchQuery: string;
 }) => {
+  const [unstarMutation, isUnstaring] = useMutation(graphql`
+    mutation ResultBox_addStarMutation($input: AddStarInput!) {
+      addStar(input: $input) {
+        starrable {
+          stargazerCount
+          id
+          viewerHasStarred
+        }
+      }
+    }
+  `);
+
+  const [starMutation, isAddstaring] = useMutation(graphql`
+    mutation ResultBox_RemoveStarMutation($input: RemoveStarInput!) {
+      removeStar(input: $input) {
+        starrable {
+          stargazerCount
+          id
+          viewerHasStarred
+        }
+      }
+    }
+  `);
   return (
     <ResultBoxWrapper>
       <ResultBoxNameBox>{name}</ResultBoxNameBox>
       <ResultBoxDescBox>{description}</ResultBoxDescBox>
-      <StarBoxWrapper>
-        <StarBox>{viewerHasStarred ? <Star /> : <Unstar />}</StarBox>
-        <StarText>{stargazerCount.toLocaleString()}</StarText>
+      <StarBoxWrapper
+        onClick={(e) => {
+          e.preventDefault();
+          !viewerHasStarred
+            ? unstarMutation({
+                variables: {
+                  input: {
+                    starrableId: id,
+                  },
+                },
+                onCompleted(_) {
+                  refetch({ query: searchQuery ?? "", first: 20, after: null });
+                },
+              })
+            : starMutation({
+                variables: {
+                  input: {
+                    starrableId: id,
+                  },
+                },
+                onCompleted(_) {
+                  refetch({ query: searchQuery ?? "", first: 20, after: null });
+                },
+              });
+        }}
+      >
+        {isUnstaring || isAddstaring ? (
+          <Loader />
+        ) : (
+          <>
+            <StarBox>{viewerHasStarred ? <Star /> : <Unstar />}</StarBox>
+            <StarText>{stargazerCount.toLocaleString()}</StarText>
+          </>
+        )}
       </StarBoxWrapper>
     </ResultBoxWrapper>
   );
