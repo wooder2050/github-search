@@ -8,8 +8,16 @@ import {
   RefetchFnDynamic,
 } from "react-relay/relay-hooks/useRefetchableFragmentNode";
 import { Loader } from "./Loader";
+import React, { useMemo } from "react";
+
 export const ResultBox = ({
-  node: { id, name, description, stargazerCount, viewerHasStarred },
+  node: {
+    id: starrableId,
+    name,
+    description,
+    stargazerCount,
+    viewerHasStarred,
+  },
   refetch,
   searchQuery,
 }: {
@@ -46,37 +54,45 @@ export const ResultBox = ({
       }
     }
   `);
+
+  const handleStarMutation = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const variables = {
+      input: {
+        starrableId,
+      },
+    };
+    const refetchVariables = {
+      query: searchQuery ?? "",
+      first: 20,
+      after: null,
+    };
+    !viewerHasStarred
+      ? unstarMutation({
+          variables,
+          onCompleted(_) {
+            refetch(refetchVariables);
+          },
+        })
+      : starMutation({
+          variables,
+          onCompleted(_) {
+            refetch(refetchVariables);
+          },
+        });
+  };
+
+  const isLoading = useMemo(
+    () => isUnstaring || isAddstaring,
+    [isUnstaring, isAddstaring]
+  );
+
   return (
     <ResultBoxWrapper>
       <ResultBoxNameBox>{name}</ResultBoxNameBox>
       <ResultBoxDescBox>{description}</ResultBoxDescBox>
-      <StarBoxWrapper
-        onClick={(e) => {
-          e.preventDefault();
-          !viewerHasStarred
-            ? unstarMutation({
-                variables: {
-                  input: {
-                    starrableId: id,
-                  },
-                },
-                onCompleted(_) {
-                  refetch({ query: searchQuery ?? "", first: 20, after: null });
-                },
-              })
-            : starMutation({
-                variables: {
-                  input: {
-                    starrableId: id,
-                  },
-                },
-                onCompleted(_) {
-                  refetch({ query: searchQuery ?? "", first: 20, after: null });
-                },
-              });
-        }}
-      >
-        {isUnstaring || isAddstaring ? (
+      <StarBoxWrapper onClick={(e) => handleStarMutation(e)}>
+        {isLoading ? (
           <Loader />
         ) : (
           <>

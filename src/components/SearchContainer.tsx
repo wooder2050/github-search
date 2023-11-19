@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from "react";
 import { graphql } from "babel-plugin-relay/macro";
-import { useClientQuery, useLazyLoadQuery } from "react-relay/hooks";
+import { useLazyLoadQuery } from "react-relay/hooks";
 import { Search } from "./search/Search";
 import { SearchHeader } from "./search/SearchHeader";
 import { Loader } from "./search/Loader";
