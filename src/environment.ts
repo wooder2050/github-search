@@ -4,7 +4,7 @@ import { Variables } from "relay-runtime/lib/util/RelayRuntimeTypes";
 
 async function fetchGraphQL(params: RequestParameters, variables: Variables) {
   const githubToken = process.env.REACT_APP_GITHUB_TOKEN;
-  const baseUrl = "https://api.github.com/graphq";
+  const baseUrl = "https://api.github.com/graphql";
   const response = await fetch(baseUrl, {
     method: "POST",
     headers: {
